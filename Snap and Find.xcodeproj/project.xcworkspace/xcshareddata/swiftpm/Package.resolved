@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "archivable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GrandLarseny/Archivable.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "bc26a6a4c93acc60e8924dd1abddf9118ff8f2cb"
+      }
+    }
+  ],
+  "version" : 2
+}

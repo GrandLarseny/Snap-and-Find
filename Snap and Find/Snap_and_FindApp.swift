@@ -9,9 +9,18 @@ import SwiftUI
 
 @main
 struct Snap_and_FindApp: App {
+
+    @StateObject var snapStore: SnapStore = SnapStore()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SnapGridView(snaps: snapStore.snaps)
+                .environmentObject(snapStore)
+#if DEBUG
+                .task {
+//                    snapStore.snaps = SnapMockData().snaps
+                }
+#endif
         }
     }
 }
