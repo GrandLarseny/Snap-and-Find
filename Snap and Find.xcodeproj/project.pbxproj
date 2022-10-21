@@ -14,6 +14,7 @@
 		421360832901EDD60028D41A /* RouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421360822901EDD60028D41A /* RouteCoordinator.swift */; };
 		4266FEDE2901F3C900343CEB /* FindInSnapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266FEDD2901F3C900343CEB /* FindInSnapView.swift */; };
 		4266FEE12901F3F400343CEB /* FindCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266FEE02901F3F400343CEB /* FindCanvasView.swift */; };
+		4266FF0A2902297700343CEB /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266FF092902297700343CEB /* Binding+Extension.swift */; };
 		42FEE7C129019B6D00014965 /* Snap_and_FindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEE7C029019B6D00014965 /* Snap_and_FindApp.swift */; };
 		42FEE7C329019B6D00014965 /* SnapGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEE7C229019B6D00014965 /* SnapGridView.swift */; };
 		42FEE7C529019B6E00014965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42FEE7C429019B6E00014965 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		421360822901EDD60028D41A /* RouteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCoordinator.swift; sourceTree = "<group>"; };
 		4266FEDD2901F3C900343CEB /* FindInSnapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInSnapView.swift; sourceTree = "<group>"; };
 		4266FEE02901F3F400343CEB /* FindCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCanvasView.swift; sourceTree = "<group>"; };
+		4266FF092902297700343CEB /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		42FEE7BD29019B6D00014965 /* Snap and Find.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snap and Find.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FEE7C029019B6D00014965 /* Snap_and_FindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snap_and_FindApp.swift; sourceTree = "<group>"; };
 		42FEE7C229019B6D00014965 /* SnapGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapGridView.swift; sourceTree = "<group>"; };
@@ -78,6 +80,14 @@
 			path = Find;
 			sourceTree = "<group>";
 		};
+		4266FF0B2902297B00343CEB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4266FF092902297700343CEB /* Binding+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		42FEE7B429019B6D00014965 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 				4266FEDF2901F3CF00343CEB /* Find */,
 				42FEE7D92901B25100014965 /* Grid */,
 				42FEE7D12901A08C00014965 /* SnapModel.swift */,
+				4266FF0B2902297B00343CEB /* Extensions */,
 				42FEE7C429019B6E00014965 /* Assets.xcassets */,
 				42FEE7C629019B6E00014965 /* Preview Content */,
 			);
@@ -209,6 +220,7 @@
 				421360812901E5D90028D41A /* Route.swift in Sources */,
 				4213607F2901DEB50028D41A /* SnapSourceButtonView.swift in Sources */,
 				42FEE7D22901A08C00014965 /* SnapModel.swift in Sources */,
+				4266FF0A2902297700343CEB /* Binding+Extension.swift in Sources */,
 				421360832901EDD60028D41A /* RouteCoordinator.swift in Sources */,
 				42FEE7DB2901BADA00014965 /* PhotoPickerSelectionView.swift in Sources */,
 				42FEE7C329019B6D00014965 /* SnapGridView.swift in Sources */,

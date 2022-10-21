@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SnapGridView: View {
 
-    var snaps: [SnapModel]
+    @EnvironmentObject var store: SnapStore
     @StateObject private var routeCoordinator = RouteCoordinator()
 
     var body: some View {
@@ -18,8 +18,8 @@ struct SnapGridView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 300))],
                           alignment: .center,
                           spacing: 50) {
-                    ForEach(snaps) { snap in
-                        NavigationLink(value: Route.findInSnap(snap)) {
+                    ForEach($store.snaps) { $snap in
+                        NavigationLink(value: Route.findInSnap($snap)) {
                             SnapGridItemView(snap: snap)
                                 .padding(.horizontal)
                         }
@@ -33,15 +33,18 @@ struct SnapGridView: View {
                     }
                 }
             }
+            .navigationDestination(for: Binding<SnapModel>.self) { model in
+                FindInSnapView(snap: model)
+            }
             .navigationDestination(for: Route.self) { route in
                 route.destination
+                    .environmentObject(routeCoordinator)
             }
-            .navigationTitle("Snap and Find")
-        }
-        .environmentObject(routeCoordinator)
-        .task {
-            if snaps.isEmpty {
-                routeCoordinator.push(.createSnap)
+            .environmentObject(routeCoordinator)
+            .task {
+                if store.snaps.isEmpty {
+                    routeCoordinator.push(.createSnap)
+                }
             }
         }
     }
@@ -49,6 +52,7 @@ struct SnapGridView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        SnapGridView(snaps: SnapMockData().snaps)
+        SnapGridView()
+            .environmentObject(SnapStore(SnapMockData().snaps))
     }
 }

@@ -14,8 +14,7 @@ struct Snap_and_FindApp: App {
 
     var body: some Scene {
         WindowGroup {
-            SnapGridView(snaps: snapStore.snaps)
-                .environmentObject(snapStore)
+            SnapGridView().environmentObject(snapStore)
 #if DEBUG
                 .task {
 //                    snapStore.snaps = SnapMockData().snaps

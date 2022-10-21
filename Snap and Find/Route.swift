@@ -10,7 +10,7 @@ import SwiftUI
 enum Route: Hashable {
     case cameraCapture
     case createSnap
-    case findInSnap(SnapModel)
+    case findInSnap(Binding<SnapModel>)
 
     @ViewBuilder
     var destination: some View {

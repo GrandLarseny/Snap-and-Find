@@ -9,10 +9,16 @@ import PencilKit
 import SwiftUI
 import GeneralUtilities
 
+protocol FindCanvasViewDelegate {
+
+    func userDidDraw(drawing data: Data)
+}
+
 struct FindCanvasView: UIViewRepresentable {
 
     let showToolbar: Bool
     let snap: SnapModel
+    let delegate: FindCanvasViewDelegate
 
     func makeUIView(context: Context) -> PKCanvasView {
         context.coordinator.canvas
@@ -36,27 +42,38 @@ struct FindCanvasView: UIViewRepresentable {
         return nil
     }
 
-    func makeCoordinator() -> Coordinator { Coordinator(snap: snap) }
+    func makeCoordinator() -> Coordinator { Coordinator(snap: snap, delegate: delegate) }
 
     class Coordinator: NSObject, PKCanvasViewDelegate {
 
         var canvas = PKCanvasView()
         var toolPicker = PKToolPicker()
         var snapImageView: UIImageView?
+        let delegate: FindCanvasViewDelegate
 
-        init(snap: SnapModel) {
+        init(snap: SnapModel, delegate: FindCanvasViewDelegate) {
+            self.delegate = delegate
             super.init()
 
             canvas.minimumZoomScale = 1
             canvas.maximumZoomScale = 5
             canvas.drawingPolicy = .anyInput
-            canvas.tool = PKInkingTool(.marker, color: .yellow.withAlphaComponent(0.75), width: 32)
+            canvas.tool = PKInkingTool(.marker, color: .yellow.withAlphaComponent(0.75), width: 26)
             canvas.backgroundColor = .clear
             canvas.delegate = self
 
             snapImageView = UIImageView(image: snap.image)
             snapImageView?.contentMode = .scaleAspectFit
             canvas.insertSubview(snapImageView!, at: 0)
+
+            if let drawingData = snap.drawing {
+                do {
+                    let drawing = try PKDrawing(data: drawingData)
+                    canvas.drawing = drawing
+                } catch {
+                    debugPrint("Warning: Couldn't recreate drawing data. \(error)")
+                }
+            }
         }
 
         func layoutImageSize() {
@@ -73,8 +90,8 @@ struct FindCanvasView: UIViewRepresentable {
             layoutImageSize()
         }
 
-        func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-            layoutImageSize()
+        func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+            delegate.userDidDraw(drawing: canvasView.drawing.dataRepresentation())
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Archivable
+import PencilKit
 import PhotosUI
 import SwiftUI
 
@@ -21,12 +22,37 @@ class SnapStore: ObservableObject {
 
     @Published var snaps: [SnapModel]
 
-    init() {
+    init(_ snaps: [SnapModel] = []) {
         if let archivedSnaps = SnapStoreArchive.retrieve() {
-            snaps = archivedSnaps.snaps
+            self.snaps = archivedSnaps.snaps
         } else {
-            snaps = []
+            self.snaps = snaps
         }
+    }
+
+    func update(snap: SnapModel) {
+        save()
+//        guard let snapIndex = snaps.firstIndex(of: snap) else { return }
+//
+//        Task {
+//            let canvasView = PKCanvasView()
+//            let imageView = UIImageView(image: snap.image)
+//
+//            canvasView.contentSize = imageView.intrinsicContentSize
+//
+//            let format = UIGraphicsImageRendererFormat.default()
+//            format.opaque = false
+//            let image = UIGraphicsImageRenderer(size: imageView.intrinsicContentSize, format: format).image { context in
+//                imageView.image?.draw(at: .zero)
+//                canvasView.drawing.image(from: imageView.frame, scale: UIScreen.main.scale).draw(at: .zero)
+//            }
+//
+//            if let imageData = image.pngData() {
+//                snaps[snapIndex].imageData = imageData
+//            }
+//
+//            save()
+//        }
     }
 
     func store(image: UIImage) {
@@ -35,26 +61,32 @@ class SnapStore: ObservableObject {
             return
         }
 
-        let newSnap = SnapModel(captureDate: Date(), imageData: data)
+        let newSnap = SnapModel(imageData: data)
         snaps.append(newSnap)
 
-        do {
-            try SnapStoreArchive(snaps: snaps).archive()
-        } catch {
-            debugPrint("Couldn't archive the snap. \(error)")
-        }
+        save()
     }
 
     func load(item: PhotosPickerItem) async {
         do {
             if let imageData = try await item.loadTransferable(type: Data.self) {
-                let newSnap = SnapModel(captureDate: Date(), imageData: imageData)
+                let newSnap = SnapModel(imageData: imageData)
                 snaps.append(newSnap)
             }
-
-            try SnapStoreArchive(snaps: snaps).archive()
         } catch {
             debugPrint("Couldn't load image. \(error)")
+        }
+
+        save()
+    }
+
+    func save() {
+        Task {
+            do {
+                try SnapStoreArchive(snaps: snaps).archive()
+            } catch {
+                debugPrint("Couldn't archive the snaps. \(error)")
+            }
         }
     }
 }

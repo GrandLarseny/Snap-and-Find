@@ -21,7 +21,7 @@ struct SnapMockData {
 
             guard let capture = Calendar.current.date(byAdding: .day, value: -1 * imageNumber, to: Date()) else { fatalError("I don't like the dates") }
 
-            return SnapModel(captureDate: capture, imageData: imageData)
+            return SnapModel(imageData: imageData, captureDate: capture)
         }
     }
 }

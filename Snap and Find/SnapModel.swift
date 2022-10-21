@@ -15,7 +15,15 @@ struct SnapModel: Archivable, Identifiable, Hashable {
 
     var id = UUID()
     let captureDate: Date
-    let imageData: Data
+    let originalImageData: Data
+    var imageData: Data
+    var drawing: Data?
+
+    init(imageData: Data, captureDate: Date = Date()) {
+        self.captureDate = captureDate
+        self.originalImageData = imageData
+        self.imageData = imageData
+    }
 
     var image: UIImage {
         if let image = UIImage(data: imageData) {

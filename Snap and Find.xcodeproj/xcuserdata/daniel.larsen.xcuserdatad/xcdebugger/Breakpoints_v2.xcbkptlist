@@ -7,99 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8079CB5E-FE7B-4A37-A782-AD7B4C5BF31E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Snap and Find/SnapStore.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "load(item:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8079CB5E-FE7B-4A37-A782-AD7B4C5BF31E - 2078662856d223b7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Snap_and_Find.SnapStore.load(item: _PhotosUI_SwiftUI.PhotosPickerItem) async -&gt; ()"
-                  moduleName = "Snap and Find"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/daniel.larsen/Developer/Snap%20and%20Find/Snap%20and%20Find/SnapStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "296">
-               </Location>
-               <Location
-                  uuid = "8079CB5E-FE7B-4A37-A782-AD7B4C5BF31E - 4e9934ddbf0ff622"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) await resume partial function for Snap_and_Find.SnapStore.load(item: _PhotosUI_SwiftUI.PhotosPickerItem) async -&gt; ()"
-                  moduleName = "Snap and Find"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/daniel.larsen/Developer/Snap%20and%20Find/Snap%20and%20Find/SnapStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  uuid = "8079CB5E-FE7B-4A37-A782-AD7B4C5BF31E - d770e784f362ac52"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) suspend resume partial function for Snap_and_Find.SnapStore.load(item: _PhotosUI_SwiftUI.PhotosPickerItem) async -&gt; ()"
-                  moduleName = "Snap and Find"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/daniel.larsen/Developer/Snap%20and%20Find/Snap%20and%20Find/SnapStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "88">
-               </Location>
-               <Location
-                  uuid = "8079CB5E-FE7B-4A37-A782-AD7B4C5BF31E - d770e784f362ac52"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) suspend resume partial function for Snap_and_Find.SnapStore.load(item: _PhotosUI_SwiftUI.PhotosPickerItem) async -&gt; ()"
-                  moduleName = "Snap and Find"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/daniel.larsen/Developer/Snap%20and%20Find/Snap%20and%20Find/SnapStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "136">
-               </Location>
-               <Location
-                  uuid = "8079CB5E-FE7B-4A37-A782-AD7B4C5BF31E - 6a292a1242710a53"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Snap_and_Find.SnapStore.load(item: _PhotosUI_SwiftUI.PhotosPickerItem) async -&gt; ()"
-                  moduleName = "Snap and Find"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/daniel.larsen/Developer/Snap%20and%20Find/Snap%20and%20Find/SnapStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "68">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "EB828E4A-8CCD-40B2-966C-572970E6480A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -110,22 +17,6 @@
             startingLineNumber = "82"
             endingLineNumber = "82"
             landmarkName = "archive(_:archiveKey:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "31C41ECF-2043-4D29-BA34-C712558C5C4F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Snap and Find/SnapStore.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "store(image:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
