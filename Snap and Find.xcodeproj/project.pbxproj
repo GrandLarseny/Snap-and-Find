@@ -16,6 +16,7 @@
 		4266FEE12901F3F400343CEB /* FindCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266FEE02901F3F400343CEB /* FindCanvasView.swift */; };
 		4266FF0A2902297700343CEB /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266FF092902297700343CEB /* Binding+Extension.swift */; };
 		4266FF0D2902DB6100343CEB /* SnapProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266FF0C2902DB6100343CEB /* SnapProcessing.swift */; };
+		4266FF11290303F200343CEB /* PKDrawing+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266FF10290303F200343CEB /* PKDrawing+Extension.swift */; };
 		42FEE7C129019B6D00014965 /* Snap_and_FindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEE7C029019B6D00014965 /* Snap_and_FindApp.swift */; };
 		42FEE7C329019B6D00014965 /* SnapGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEE7C229019B6D00014965 /* SnapGridView.swift */; };
 		42FEE7C529019B6E00014965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42FEE7C429019B6E00014965 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		4266FEE02901F3F400343CEB /* FindCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCanvasView.swift; sourceTree = "<group>"; };
 		4266FF092902297700343CEB /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		4266FF0C2902DB6100343CEB /* SnapProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapProcessing.swift; sourceTree = "<group>"; };
+		4266FF10290303F200343CEB /* PKDrawing+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PKDrawing+Extension.swift"; sourceTree = "<group>"; };
 		42FEE7BD29019B6D00014965 /* Snap and Find.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snap and Find.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FEE7C029019B6D00014965 /* Snap_and_FindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snap_and_FindApp.swift; sourceTree = "<group>"; };
 		42FEE7C229019B6D00014965 /* SnapGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapGridView.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				4266FF092902297700343CEB /* Binding+Extension.swift */,
+				4266FF10290303F200343CEB /* PKDrawing+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				42FEE7D42901A7F100014965 /* SnapMockData.swift in Sources */,
 				42FEE7D82901B05400014965 /* SnapStore.swift in Sources */,
 				4213607A2901D3450028D41A /* CameraCaptureView.swift in Sources */,
+				4266FF11290303F200343CEB /* PKDrawing+Extension.swift in Sources */,
 				4266FF0D2902DB6100343CEB /* SnapProcessing.swift in Sources */,
 				4266FEDE2901F3C900343CEB /* FindInSnapView.swift in Sources */,
 			);
@@ -367,6 +371,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This is the snap part of snap and find";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save your beautiful creation to the photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -400,6 +405,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This is the snap part of snap and find";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save your beautiful creation to the photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

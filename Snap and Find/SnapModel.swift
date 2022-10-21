@@ -9,7 +9,7 @@ import Archivable
 import Foundation
 import UIKit
 
-struct SnapModel: Archivable, Identifiable, Hashable {
+class SnapModel: Archivable {
 
     static var location: ArchiveLocation { .filesystem(directory: .documents) }
 
@@ -17,6 +17,7 @@ struct SnapModel: Archivable, Identifiable, Hashable {
     let captureDate: Date
     var imageData: Data
     var drawing: Data?
+    var thumbnail: Data?
 
     init(imageData: Data, captureDate: Date = Date()) {
         self.captureDate = captureDate
@@ -29,5 +30,29 @@ struct SnapModel: Archivable, Identifiable, Hashable {
         } else {
             return UIImage(systemName: "questionmark.app")!
         }
+    }
+
+    var thumbnailImage: UIImage {
+        if let thumbnail = thumbnail,
+           let thumbnailImage = UIImage(data: thumbnail) {
+            return thumbnailImage
+        } else {
+            return image
+        }
+    }
+
+    func setNeedsReload() {
+        id = UUID()
+    }
+}
+
+extension SnapModel: Identifiable, Hashable {
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: SnapModel, rhs: SnapModel) -> Bool {
+        lhs.id == rhs.id
     }
 }

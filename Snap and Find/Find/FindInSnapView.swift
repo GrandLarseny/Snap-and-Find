@@ -15,42 +15,109 @@ struct FindInSnapView: View {
     @State var drawing = PKDrawing()
     @EnvironmentObject var store: SnapStore
 
-    var body: some View {
-        FindCanvasView(showToolbar: showToolbar,
-                       snap: snap,
-                       drawing: $drawing)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                HStack {
-                    Button {
-                        resetSnap()
-                    } label: {
-                        Image(systemName: "arrow.counterclockwise")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
+    @State var zoomScale: CGFloat = 1.0
+    @State var zoomOffset: CGSize = .zero
 
-                    Button {
-                        showToolbar = true
-                    } label: {
-                        Image(systemName: "pencil.and.outline")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+    var body: some View {
+        Image(uiImage: snap.image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .scaleEffect(zoomScale)
+            .offset(zoomOffset)
+            .overlay {
+                FindCanvasView(showToolbar: showToolbar,
+                               drawing: drawing,
+                               delegate: self)
+            }
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    HStack {
+
+                        Button {
+                            saveThumbnail()
+                        } label: {
+                            Image(systemName: "square.and.arrow.down")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
+
+                        Button {
+                            resetSnap()
+                        } label: {
+                            Image(systemName: "arrow.counterclockwise")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
+
+                        Button {
+                            showToolbar.toggle()
+                        } label: {
+                            Image(systemName: "pencil.and.outline")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                        .frame(height: 32)
                     }
-                    .frame(height: 32)
                 }
             }
-        }
-        .navigationTitle("Snapped on \(DateFormatter.localizedString(from: snap.captureDate, dateStyle: .short, timeStyle: .short))")
-        .navigationBarTitleDisplayMode(.inline)
-        .onDisappear {
-            snap.drawing = drawing.dataRepresentation()
-            store.save()
+            .navigationTitle("Snapped on \(DateFormatter.localizedString(from: snap.captureDate, dateStyle: .short, timeStyle: .short))")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                do {
+                    if let snapDrawing = snap.drawing {
+                        drawing = try PKDrawing(data: snapDrawing)
+                    }
+                } catch {
+                    debugPrint("Uh-oh, bad drawing data. Discarding.")
+                }
+
+                showToolbar = true
+            }
+            .onDisappear {
+                Task {
+                    debugPrint(" <<< Goodbye!")
+                    snap.thumbnail = thumbnail.pngData()
+                    snap.setNeedsReload()
+                    store.save()
+                }
+            }
+    }
+
+    var thumbnail: UIImage {
+        if let drawingData = snap.drawing,
+           let drawing = try? PKDrawing(data: drawingData) {
+            return drawing.draw(on: snap.image)
+        } else {
+            return snap.image
         }
     }
 
     func resetSnap() {
         drawing = PKDrawing()
+    }
+
+    private func saveThumbnail() {
+        snap.thumbnail = thumbnail.pngData()
+
+        UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
+
+        Task {
+            store.save()
+        }
+    }
+}
+
+extension FindInSnapView: FindCanvasViewDelegate {
+
+    func drawingDidChange(_ drawing: PKDrawing) {
+        Task {
+            snap.drawing = drawing.dataRepresentation()
+        }
+    }
+
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        zoomScale = scrollView.zoomScale
+        zoomOffset = CGSize(width: -scrollView.contentOffset.x, height: -scrollView.contentOffset.y)
     }
 }
 

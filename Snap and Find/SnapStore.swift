@@ -62,6 +62,8 @@ class SnapStore: ObservableObject {
             } catch {
                 debugPrint("Couldn't archive the snaps. \(error)")
             }
+
+            debugPrint("  === Snaps Saved ===")
         }
     }
 

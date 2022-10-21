@@ -40,6 +40,7 @@ struct SnapGridView: View {
                 route.destination
                     .environmentObject(routeCoordinator)
             }
+            .navigationTitle("Snap and Find")
             .environmentObject(routeCoordinator)
             .task {
                 if store.snaps.isEmpty {

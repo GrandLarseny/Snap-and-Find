@@ -13,23 +13,25 @@ import Vision
 enum SnapProcessing {
 
     static func processImage(data: Data) -> Data? {
+        let uiImage = UIImage(data: data)
+        let originalOrientation = uiImage?.imageOrientation
         if let cgImage = resizedToFitHeight(with: data, height: 1024) {
             let ciImage = CIImage(cgImage: cgImage)
             let outlineImageObservation = detectVisionContours(cgImage: cgImage, ciImage: ciImage)
 
             let colorFilter = CIFilter.colorControls()
             colorFilter.inputImage = ciImage
-            colorFilter.brightness = 1
-            colorFilter.contrast = 1.8
+            colorFilter.brightness = 0.9
+            colorFilter.contrast = 1.7
             colorFilter.saturation = 0
 
             let ciContext = CIContext()
 
             if let noirImage = colorFilter.outputImage,
                let cgNoirImage = ciContext.createCGImage(noirImage, from: noirImage.extent),
-               let outlineImageObservation = outlineImageObservation,
-               let uiImageData = drawContours(contoursObservation: outlineImageObservation, sourceImage: cgNoirImage).pngData() {
-                return uiImageData
+               let outlineImageObservation = outlineImageObservation {
+                let drawnUIImage = drawContours(contoursObservation: outlineImageObservation, sourceImage: cgNoirImage, originalOrientation: originalOrientation)
+                return drawnUIImage.pngData()
             }
         }
 
@@ -54,7 +56,7 @@ enum SnapProcessing {
         return nil
     }
 
-    static func drawContours(contoursObservation: VNContoursObservation, sourceImage: CGImage) -> UIImage {
+    static func drawContours(contoursObservation: VNContoursObservation, sourceImage: CGImage, originalOrientation: UIImage.Orientation?) -> UIImage {
         let size = CGSize(width: sourceImage.width, height: sourceImage.height)
         let renderer = UIGraphicsImageRenderer(size: size)
 

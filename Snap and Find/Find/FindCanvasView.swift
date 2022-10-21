@@ -8,44 +8,48 @@
 import PencilKit
 import SwiftUI
 
+protocol FindCanvasViewDelegate {
+
+    func drawingDidChange(_ drawing: PKDrawing)
+
+    func scrollViewDidZoom(_ scrollView: UIScrollView)
+}
+
 struct FindCanvasView: UIViewRepresentable {
 
     let showToolbar: Bool
-    let snap: SnapModel
-    @Binding var drawing: PKDrawing
+    let drawing: PKDrawing
+    let delegate: FindCanvasViewDelegate?
 
     func makeUIView(context: Context) -> PKCanvasView {
-        context.coordinator.canvas
+        context.coordinator.canvas.drawing = drawing
+        return context.coordinator.canvas
     }
 
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
-        if showToolbar {
-            context.coordinator.showToolbar()
-        }
-
-        context.coordinator.layoutImageSize()
+        context.coordinator.showToolbar = showToolbar
         context.coordinator.canvas.drawing = drawing
     }
 
-    func sizeThatFits(_ proposal: ProposedViewSize, uiView: PKCanvasView, context: Context) -> CGSize? {
-        if let width = proposal.width,
-           let height = proposal.height {
-            let proposedSize = CGSize(width: width, height: height)
-            context.coordinator.snapImageView?.frame = CGRect(origin: .zero, size: proposedSize)
-        }
-
-        return nil
-    }
-
-    func makeCoordinator() -> Coordinator { Coordinator(snap: snap) }
+    func makeCoordinator() -> Coordinator { Coordinator(delegate: delegate) }
 
     class Coordinator: NSObject, PKCanvasViewDelegate {
 
         var canvas = PKCanvasView()
         var toolPicker = PKToolPicker()
-        var snapImageView: UIImageView?
+        var showToolbar: Bool {
+            didSet {
+                toolPicker.setVisible(showToolbar, forFirstResponder: canvas)
+                toolPicker.addObserver(canvas)
+                canvas.becomeFirstResponder()
+            }
+        }
+        let delegate: FindCanvasViewDelegate?
 
-        init(snap: SnapModel) {
+        init(delegate: FindCanvasViewDelegate?) {
+            showToolbar = true
+            self.delegate = delegate
+
             super.init()
 
             canvas.minimumZoomScale = 1
@@ -54,24 +58,14 @@ struct FindCanvasView: UIViewRepresentable {
             canvas.tool = PKInkingTool(.marker, color: .yellow.withAlphaComponent(0.75), width: 26)
             canvas.backgroundColor = .clear
             canvas.delegate = self
-
-            snapImageView = UIImageView(image: snap.image)
-            snapImageView?.contentMode = .scaleAspectFit
-            canvas.insertSubview(snapImageView!, at: 0)
         }
 
-        func layoutImageSize() {
-            snapImageView?.frame.size = canvas.contentSize
-        }
-
-        func showToolbar() {
-            toolPicker.setVisible(true, forFirstResponder: canvas)
-            toolPicker.addObserver(canvas)
-            canvas.becomeFirstResponder()
+        func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+            delegate?.drawingDidChange(canvasView.drawing)
         }
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
-            layoutImageSize()
+            delegate?.scrollViewDidZoom(scrollView)
         }
     }
 }

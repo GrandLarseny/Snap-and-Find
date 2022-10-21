@@ -13,7 +13,7 @@ struct SnapGridItemView: View {
 
     var body: some View {
         VStack {
-            Image(uiImage: snap.image)
+            Image(uiImage: snap.thumbnailImage)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .cornerRadius(16)
