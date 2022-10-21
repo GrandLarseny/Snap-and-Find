@@ -5,16 +5,20 @@
 //  Created by Daniel Larsen on 10/20/22.
 //
 
+import PencilKit
 import SwiftUI
 
 struct FindInSnapView: View {
 
     @Binding var snap: SnapModel
     @State var showToolbar = false
+    @State var drawing = PKDrawing()
     @EnvironmentObject var store: SnapStore
 
     var body: some View {
-        FindCanvasView(showToolbar: showToolbar, snap: snap, delegate: self)
+        FindCanvasView(showToolbar: showToolbar,
+                       snap: snap,
+                       drawing: $drawing)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 HStack {
@@ -40,19 +44,13 @@ struct FindInSnapView: View {
         .navigationTitle("Snapped on \(DateFormatter.localizedString(from: snap.captureDate, dateStyle: .short, timeStyle: .short))")
         .navigationBarTitleDisplayMode(.inline)
         .onDisappear {
-            store.update(snap: snap)
+            snap.drawing = drawing.dataRepresentation()
+            store.save()
         }
     }
 
     func resetSnap() {
-        snap.imageData = snap.originalImageData
-    }
-}
-
-extension FindInSnapView: FindCanvasViewDelegate {
-
-    func userDidDraw(drawing data: Data) {
-        self.snap.drawing = data
+        drawing = PKDrawing()
     }
 }
 

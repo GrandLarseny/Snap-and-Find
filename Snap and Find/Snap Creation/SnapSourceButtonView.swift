@@ -15,8 +15,8 @@ struct SnapSourceButtonView: View {
 
         var image: Image {
             switch self {
-            case .camera: return Image(systemName: "photo")
-            case .library: return Image(systemName: "camera.fill")
+            case .camera: return Image(systemName: "camera.fill")
+            case .library: return Image(systemName: "photo")
             }
         }
 

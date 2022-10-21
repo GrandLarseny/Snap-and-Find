@@ -6,9 +6,11 @@
 //
 
 import Archivable
+import CoreImage.CIFilterBuiltins
 import PencilKit
 import PhotosUI
 import SwiftUI
+import Vision
 
 struct SnapStoreArchive: Archivable {
 
@@ -30,39 +32,13 @@ class SnapStore: ObservableObject {
         }
     }
 
-    func update(snap: SnapModel) {
-        save()
-//        guard let snapIndex = snaps.firstIndex(of: snap) else { return }
-//
-//        Task {
-//            let canvasView = PKCanvasView()
-//            let imageView = UIImageView(image: snap.image)
-//
-//            canvasView.contentSize = imageView.intrinsicContentSize
-//
-//            let format = UIGraphicsImageRendererFormat.default()
-//            format.opaque = false
-//            let image = UIGraphicsImageRenderer(size: imageView.intrinsicContentSize, format: format).image { context in
-//                imageView.image?.draw(at: .zero)
-//                canvasView.drawing.image(from: imageView.frame, scale: UIScreen.main.scale).draw(at: .zero)
-//            }
-//
-//            if let imageData = image.pngData() {
-//                snaps[snapIndex].imageData = imageData
-//            }
-//
-//            save()
-//        }
-    }
-
     func store(image: UIImage) {
         guard let data = image.pngData() else {
             debugPrint("Failed to create PNG data for image, which is odd")
             return
         }
 
-        let newSnap = SnapModel(imageData: data)
-        snaps.append(newSnap)
+        addImage(data: data)
 
         save()
     }
@@ -70,8 +46,7 @@ class SnapStore: ObservableObject {
     func load(item: PhotosPickerItem) async {
         do {
             if let imageData = try await item.loadTransferable(type: Data.self) {
-                let newSnap = SnapModel(imageData: imageData)
-                snaps.append(newSnap)
+                addImage(data: imageData)
             }
         } catch {
             debugPrint("Couldn't load image. \(error)")
@@ -88,5 +63,35 @@ class SnapStore: ObservableObject {
                 debugPrint("Couldn't archive the snaps. \(error)")
             }
         }
+    }
+
+    private func addImage(data: Data) {
+        var imageData = data
+
+        if let cgImage = SnapProcessing.resizedToFitHeight(with: data, height: 1024) {
+            let ciImage = CIImage(cgImage: cgImage)
+            let outlineImage = SnapProcessing.detectVisionContours(cgImage: cgImage, ciImage: ciImage)!
+            let noirFilter = CIFilter.photoEffectNoir()
+            noirFilter.inputImage = CIImage(image: outlineImage)
+
+            if let noirImage = noirFilter.outputImage,
+               let uiImageData = UIImage(ciImage: noirImage).pngData() {
+                imageData = uiImageData
+            }
+        }
+        //        if let ciImage = CIImage(data: data),
+        //           let noirImage = CIFilter(name: "CIPhotoEffectNoir", parameters: [kCIInputImageKey: ciImage])?.outputImage,
+        //           let edgeImage = CIFilter(name: "CIEdgeWork", parameters: [kCIInputImageKey: ciImage, kCIInputRadiusKey: 5])?.outputImage {
+        //            let blackEdgeImage = edgeImage.applyingFilter("CIColorInvert", parameters: [kCIInputImageKey: edgeImage])
+        //            let combinedImage = CIFilter(name: "CISourceOverCompositing", parameters: [kCIInputBackgroundImageKey: noirImage, kCIInputImageKey: blackEdgeImage])
+        //
+        //            if let coloringImage = combinedImage?.outputImage,
+        //               let uiImageData = UIImage(ciImage: coloringImage).pngData() {
+        //                imageData = uiImageData
+        //            }
+        //        }
+
+        let newSnap = SnapModel(imageData: imageData)
+        snaps.append(newSnap)
     }
 }
