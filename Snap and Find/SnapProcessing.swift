@@ -5,13 +5,38 @@
 //  Created by Daniel Larsen on 10/21/22.
 //
 
-import UIKit
 import Accelerate.vImage
+import CoreImage.CIFilterBuiltins
+import UIKit
 import Vision
 
 enum SnapProcessing {
 
-    static func detectVisionContours(cgImage: CGImage, ciImage: CIImage) -> UIImage? {
+    static func processImage(data: Data) -> Data? {
+        if let cgImage = resizedToFitHeight(with: data, height: 1024) {
+            let ciImage = CIImage(cgImage: cgImage)
+            let outlineImageObservation = detectVisionContours(cgImage: cgImage, ciImage: ciImage)
+
+            let colorFilter = CIFilter.colorControls()
+            colorFilter.inputImage = ciImage
+            colorFilter.brightness = 1
+            colorFilter.contrast = 1.8
+            colorFilter.saturation = 0
+
+            let ciContext = CIContext()
+
+            if let noirImage = colorFilter.outputImage,
+               let cgNoirImage = ciContext.createCGImage(noirImage, from: noirImage.extent),
+               let outlineImageObservation = outlineImageObservation,
+               let uiImageData = drawContours(contoursObservation: outlineImageObservation, sourceImage: cgNoirImage).pngData() {
+                return uiImageData
+            }
+        }
+
+        return nil
+    }
+
+    static func detectVisionContours(cgImage: CGImage, ciImage: CIImage) -> VNContoursObservation? {
         let contourRequest = VNDetectContoursRequest()
         contourRequest.revision = VNDetectContourRequestRevision1
         contourRequest.contrastAdjustment = 1.0
@@ -21,17 +46,15 @@ enum SnapProcessing {
 
         do {
             try requestHandler.perform([contourRequest])
-            if let contoursObservation = contourRequest.results?.first as? VNContoursObservation {
-                return drawContours(contoursObservation: contoursObservation, sourceImage: cgImage)
-            }
+            return contourRequest.results?.first as? VNContoursObservation
         } catch {
             debugPrint("Could not perform vision request. \(error)")
         }
 
-        return UIImage(cgImage: cgImage)
+        return nil
     }
 
-    private static func drawContours(contoursObservation: VNContoursObservation, sourceImage: CGImage) -> UIImage {
+    static func drawContours(contoursObservation: VNContoursObservation, sourceImage: CGImage) -> UIImage {
         let size = CGSize(width: sourceImage.width, height: sourceImage.height)
         let renderer = UIGraphicsImageRenderer(size: size)
 

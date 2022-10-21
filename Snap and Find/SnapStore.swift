@@ -68,28 +68,9 @@ class SnapStore: ObservableObject {
     private func addImage(data: Data) {
         var imageData = data
 
-        if let cgImage = SnapProcessing.resizedToFitHeight(with: data, height: 1024) {
-            let ciImage = CIImage(cgImage: cgImage)
-            let outlineImage = SnapProcessing.detectVisionContours(cgImage: cgImage, ciImage: ciImage)!
-            let noirFilter = CIFilter.photoEffectNoir()
-            noirFilter.inputImage = CIImage(image: outlineImage)
-
-            if let noirImage = noirFilter.outputImage,
-               let uiImageData = UIImage(ciImage: noirImage).pngData() {
-                imageData = uiImageData
-            }
+        if let processedData = SnapProcessing.processImage(data: data) {
+            imageData = processedData
         }
-        //        if let ciImage = CIImage(data: data),
-        //           let noirImage = CIFilter(name: "CIPhotoEffectNoir", parameters: [kCIInputImageKey: ciImage])?.outputImage,
-        //           let edgeImage = CIFilter(name: "CIEdgeWork", parameters: [kCIInputImageKey: ciImage, kCIInputRadiusKey: 5])?.outputImage {
-        //            let blackEdgeImage = edgeImage.applyingFilter("CIColorInvert", parameters: [kCIInputImageKey: edgeImage])
-        //            let combinedImage = CIFilter(name: "CISourceOverCompositing", parameters: [kCIInputBackgroundImageKey: noirImage, kCIInputImageKey: blackEdgeImage])
-        //
-        //            if let coloringImage = combinedImage?.outputImage,
-        //               let uiImageData = UIImage(ciImage: coloringImage).pngData() {
-        //                imageData = uiImageData
-        //            }
-        //        }
 
         let newSnap = SnapModel(imageData: imageData)
         snaps.append(newSnap)
