@@ -27,6 +27,7 @@
 		42FEE7D62901AE9F00014965 /* SnapGridItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEE7D52901AE9F00014965 /* SnapGridItemView.swift */; };
 		42FEE7D82901B05400014965 /* SnapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEE7D72901B05400014965 /* SnapStore.swift */; };
 		42FEE7DB2901BADA00014965 /* PhotoPickerSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEE7DA2901BADA00014965 /* PhotoPickerSelectionView.swift */; };
+		653725DC290A2DBC00BB1937 /* Published+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653725DB290A2DBC00BB1937 /* Published+Codable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		42FEE7D52901AE9F00014965 /* SnapGridItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapGridItemView.swift; sourceTree = "<group>"; };
 		42FEE7D72901B05400014965 /* SnapStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapStore.swift; sourceTree = "<group>"; };
 		42FEE7DA2901BADA00014965 /* PhotoPickerSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerSelectionView.swift; sourceTree = "<group>"; };
+		653725DB290A2DBC00BB1937 /* Published+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Published+Codable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			children = (
 				4266FF092902297700343CEB /* Binding+Extension.swift */,
 				4266FF10290303F200343CEB /* PKDrawing+Extension.swift */,
+				653725DB290A2DBC00BB1937 /* Published+Codable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				42FEE7D82901B05400014965 /* SnapStore.swift in Sources */,
 				4213607A2901D3450028D41A /* CameraCaptureView.swift in Sources */,
 				4266FF11290303F200343CEB /* PKDrawing+Extension.swift in Sources */,
+				653725DC290A2DBC00BB1937 /* Published+Codable.swift in Sources */,
 				4266FF0D2902DB6100343CEB /* SnapProcessing.swift in Sources */,
 				4266FEDE2901F3C900343CEB /* FindInSnapView.swift in Sources */,
 			);

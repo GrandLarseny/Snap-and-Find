@@ -12,15 +12,17 @@ struct SnapGridItemView: View {
     @ObservedObject var snap: SnapModel
 
     var body: some View {
-        VStack {
-            Image(uiImage: snap.thumbnailImage)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxHeight: 300)
-                .cornerRadius(16)
+        if let thumbnail = UIImage(data: snap.thumbnail ?? snap.imageData) {
+            VStack {
+                Image(uiImage: thumbnail)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 300)
+                    .cornerRadius(16)
 
-            Text(DateFormatter.localizedString(from: snap.captureDate, dateStyle: .medium, timeStyle: .short))
-                .font(.caption)
+                Text(DateFormatter.localizedString(from: snap.captureDate, dateStyle: .medium, timeStyle: .short))
+                    .font(.caption)
+            }
         }
     }
 }

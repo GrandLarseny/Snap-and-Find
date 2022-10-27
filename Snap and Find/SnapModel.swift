@@ -13,13 +13,14 @@ class SnapModel: Archivable, ObservableObject {
 
     static var location: ArchiveLocation { .filesystem(directory: .documents) }
 
-    var id = UUID()
+    let id: UUID
     let captureDate: Date
     var imageData: Data
     var drawing: Data?
-    var thumbnail: Data?
+    @Published var thumbnail: Data?
 
-    init(imageData: Data, captureDate: Date = Date()) {
+    init(_ id: UUID = UUID(), imageData: Data, captureDate: Date = Date()) {
+        self.id = id
         self.captureDate = captureDate
         self.imageData = imageData
     }
@@ -29,15 +30,6 @@ class SnapModel: Archivable, ObservableObject {
             return image
         } else {
             return UIImage(systemName: "questionmark.app")!
-        }
-    }
-
-    var thumbnailImage: UIImage {
-        if let thumbnail = thumbnail,
-           let thumbnailImage = UIImage(data: thumbnail) {
-            return thumbnailImage
-        } else {
-            return image
         }
     }
 }
