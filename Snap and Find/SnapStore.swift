@@ -67,14 +67,6 @@ class SnapStore: ObservableObject {
         }
     }
 
-    func reload(snap: SnapModel) {
-        if let snapIndex = snaps.firstIndex(of: snap) {
-            snaps.remove(at: snapIndex)
-        }
-
-        snaps.append(snap)
-    }
-
     private func addImage(data: Data) {
         var imageData = data
 

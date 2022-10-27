@@ -86,7 +86,6 @@ struct FindInSnapView: View {
                 Task {
                     debugPrint(" <<< Goodbye!")
                     snap.thumbnail = thumbnail.pngData()
-                    store.reload(snap: snap)
                     store.save()
                 }
             }

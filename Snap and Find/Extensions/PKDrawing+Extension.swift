@@ -12,9 +12,9 @@ extension PKDrawing {
 
     func draw(on background: UIImage) -> UIImage {
         let scaledDrawing = scale(by: UIScreen.main.scale)
-        let image = scaledDrawing.image(from: scaledDrawing.bounds, scale: UIScreen.main.scale)
+        let image = scaledDrawing.image(from: CGRect(origin: .zero, size: background.size), scale: UIScreen.main.scale)
 
-        return background.mergeImage(with: image, point: scaledDrawing.bounds.origin)
+        return background.mergeImage(with: image)
     }
 
     func scale(by scaleFactor: CGFloat) -> PKDrawing {
