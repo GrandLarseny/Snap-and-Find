@@ -9,13 +9,14 @@ import SwiftUI
 
 struct SnapGridItemView: View {
 
-    let snap: SnapModel
+    @ObservedObject var snap: SnapModel
 
     var body: some View {
         VStack {
             Image(uiImage: snap.thumbnailImage)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 300)
                 .cornerRadius(16)
 
             Text(DateFormatter.localizedString(from: snap.captureDate, dateStyle: .medium, timeStyle: .short))

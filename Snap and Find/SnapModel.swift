@@ -9,7 +9,7 @@ import Archivable
 import Foundation
 import UIKit
 
-class SnapModel: Archivable {
+class SnapModel: Archivable, ObservableObject {
 
     static var location: ArchiveLocation { .filesystem(directory: .documents) }
 
@@ -39,10 +39,6 @@ class SnapModel: Archivable {
         } else {
             return image
         }
-    }
-
-    func setNeedsReload() {
-        id = UUID()
     }
 }
 

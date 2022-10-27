@@ -21,7 +21,7 @@ enum SnapProcessing {
 
             let colorFilter = CIFilter.colorControls()
             colorFilter.inputImage = ciImage
-            colorFilter.brightness = 0.9
+            colorFilter.brightness = 0.7
             colorFilter.contrast = 1.7
             colorFilter.saturation = 0
 

@@ -3,6 +3,20 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "FindInSnapView.rotate():FindInSnapView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UIImage(cgImage: cgImage, scale: snap.image.scale, orientation: .up)">
+            </PersistentString>
+            <PersistentString
+               value = "UIImage(cgImage: cgImage, scale: snap.image.scale, orientation: .left)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SnapStore.addImage(data:):SnapStore.swift">
+      </ContextState>
+      <ContextState
          contextName = "SnapStore.detectVisionContours(uiImage:ciImage:):SnapStore.swift">
       </ContextState>
       <ContextState
@@ -12,9 +26,6 @@
                value = "thumbnail">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "SnapStore.addImage(data:):SnapStore.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

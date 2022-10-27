@@ -12,16 +12,21 @@ struct SnapGridView: View {
     @EnvironmentObject var store: SnapStore
     @StateObject private var routeCoordinator = RouteCoordinator()
 
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
     var body: some View {
         NavigationStack(path: $routeCoordinator.path) {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 300))],
+                LazyVGrid(columns: columns,
                           alignment: .center,
                           spacing: 50) {
                     ForEach($store.snaps) { $snap in
                         NavigationLink(value: Route.findInSnap($snap)) {
                             SnapGridItemView(snap: snap)
-                                .padding(.horizontal)
                         }
                     }
 

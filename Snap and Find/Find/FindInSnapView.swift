@@ -22,8 +22,9 @@ struct FindInSnapView: View {
         Image(uiImage: snap.image)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .scaleEffect(zoomScale)
+            .scaleEffect(zoomScale, anchor: .topLeading)
             .offset(zoomOffset)
+            .clipped()
             .overlay {
                 FindCanvasView(showToolbar: showToolbar,
                                drawing: drawing,
@@ -37,6 +38,14 @@ struct FindInSnapView: View {
                             saveThumbnail()
                         } label: {
                             Image(systemName: "square.and.arrow.down")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
+
+                        Button {
+                            rotate()
+                        } label: {
+                            Image(systemName: "rotate.right")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         }
@@ -77,10 +86,19 @@ struct FindInSnapView: View {
                 Task {
                     debugPrint(" <<< Goodbye!")
                     snap.thumbnail = thumbnail.pngData()
-                    snap.setNeedsReload()
+                    store.reload(snap: snap)
                     store.save()
                 }
             }
+    }
+
+    func rotate() {
+        if let rotatedImage = snap.image.rotate(radians: .pi/2),
+           let imageData = rotatedImage.pngData() {
+            snap.imageData = imageData
+            zoomScale = 2
+            zoomScale = 1
+        }
     }
 
     var thumbnail: UIImage {
