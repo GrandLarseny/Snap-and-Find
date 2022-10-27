@@ -10,17 +10,15 @@ import SwiftUI
 
 extension PKDrawing {
 
-    func draw(on background: UIImage) -> UIImage {
-        let scaledDrawing = scale(by: UIScreen.main.scale)
-        let image = scaledDrawing.image(from: CGRect(origin: .zero, size: background.size), scale: UIScreen.main.scale)
+    func draw(on background: UIImage, canvasFrame: CGRect) -> UIImage {
+        let scaleFactorX = background.size.width / canvasFrame.width
+        let scaleFactorY = background.size.height / canvasFrame.height
+        let trasform = CGAffineTransform(scaleX: scaleFactorX, y: scaleFactorY)
 
-        return background.mergeImage(with: image)
-    }
+        let scaledDrawing = transformed(using: trasform)
+        let drawnImage = scaledDrawing.image(from: CGRect(origin: .zero, size: background.size), scale: UIScreen.main.scale)
 
-    func scale(by scaleFactor: CGFloat) -> PKDrawing {
-        let trasform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
-
-        return transformed(using: trasform)
+        return background.mergeImage(with: drawnImage)
     }
 }
 

@@ -15,6 +15,7 @@ struct FindInSnapView: View {
     @State var drawing = PKDrawing()
     @EnvironmentObject var store: SnapStore
 
+    @State var canvasFrame: CGRect = .zero
     @State var zoomScale: CGFloat = 1.0
     @State var zoomOffset: CGSize = .zero
 
@@ -103,7 +104,7 @@ struct FindInSnapView: View {
     var thumbnail: UIImage {
         if let drawingData = snap.drawing,
            let drawing = try? PKDrawing(data: drawingData) {
-            return drawing.draw(on: snap.image)
+            return drawing.draw(on: snap.image, canvasFrame: canvasFrame)
         } else {
             return snap.image
         }
@@ -126,9 +127,10 @@ struct FindInSnapView: View {
 
 extension FindInSnapView: FindCanvasViewDelegate {
 
-    func drawingDidChange(_ drawing: PKDrawing) {
+    func drawingDidChange(_ canvas: PKCanvasView) {
         Task {
-            snap.drawing = drawing.dataRepresentation()
+            canvasFrame = canvas.frame
+            snap.drawing = canvas.drawing.dataRepresentation()
         }
     }
 

@@ -10,7 +10,7 @@ import SwiftUI
 
 protocol FindCanvasViewDelegate {
 
-    func drawingDidChange(_ drawing: PKDrawing)
+    func drawingDidChange(_ drawing: PKCanvasView)
 
     func scrollViewDidZoom(_ scrollView: UIScrollView)
 }
@@ -61,7 +61,7 @@ struct FindCanvasView: UIViewRepresentable {
         }
 
         func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-            delegate?.drawingDidChange(canvasView.drawing)
+            delegate?.drawingDidChange(canvasView)
         }
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
