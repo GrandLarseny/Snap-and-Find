@@ -39,7 +39,7 @@ struct CameraCaptureView: UIViewControllerRepresentable {
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
-                parent.store.store(image: image)
+                parent.store.add(image: image)
             }
 
             parent.routeCoordinator.popToRoot()

@@ -32,21 +32,21 @@ class SnapStore: ObservableObject {
         }
     }
 
-    func store(image: UIImage) {
+    func add(image: UIImage) {
         guard let data = image.pngData() else {
             debugPrint("Failed to create PNG data for image, which is odd")
             return
         }
 
-        addImage(data: data)
+        addImage(data: data, orientation: image.imageOrientation)
 
         save()
     }
 
     func load(item: PhotosPickerItem) async {
         do {
-            if let imageData = try await item.loadTransferable(type: Data.self) {
-                addImage(data: imageData)
+            if let image = try await item.loadTransferable(type: Data.self) {
+                addImage(data: image, orientation: .up)
             }
         } catch {
             debugPrint("Couldn't load image. \(error)")
@@ -67,7 +67,7 @@ class SnapStore: ObservableObject {
         }
     }
 
-    private func addImage(data: Data) {
+    private func addImage(data: Data, orientation: UIImage.Orientation) {
         var imageData = data
 
         if let processedData = SnapProcessing.processImage(data: data) {

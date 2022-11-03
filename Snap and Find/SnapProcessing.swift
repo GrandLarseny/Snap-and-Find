@@ -21,8 +21,8 @@ enum SnapProcessing {
 
             let colorFilter = CIFilter.colorControls()
             colorFilter.inputImage = ciImage
-            colorFilter.brightness = 0.7
-            colorFilter.contrast = 1.7
+            colorFilter.brightness = 0.5
+            colorFilter.contrast = 2.0
             colorFilter.saturation = 0
 
             let ciContext = CIContext()
@@ -41,8 +41,9 @@ enum SnapProcessing {
     static func detectVisionContours(cgImage: CGImage, ciImage: CIImage) -> VNContoursObservation? {
         let contourRequest = VNDetectContoursRequest()
         contourRequest.revision = VNDetectContourRequestRevision1
-        contourRequest.contrastAdjustment = 1.0
+//        contourRequest.contrastAdjustment = 1.0
         contourRequest.maximumImageDimension = 512
+        contourRequest.detectsDarkOnLight = true
 
         let requestHandler = VNImageRequestHandler.init(ciImage: ciImage, options: [:])
 
